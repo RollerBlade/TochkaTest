@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "858355007256",
+    "project_id": "tockatest"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858355007256:android:5eb43be8a606951f",
+        "android_client_info": {
+          "package_name": "com.k002422.tochkatest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858355007256-v6sjt6a2resnucp2tnhhda1jaibbpiqt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.k002422.tochkatest",
+            "certificate_hash": "16456707cd6d1ff1a3fa66fcf6a2d07a1d344852"
+          }
+        },
+        {
+          "client_id": "858355007256-uppqna96b8uvjt3liumhblr0jo532m4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoxO8tHixOp9DXS8AaTeJTdKG3MadsfaM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

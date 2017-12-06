@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TochkaTest</string>
+    <string name="vkLoginDescription">TochkaTest</string>
+    <string name="fbLoginDescription">TochkaTest</string>
+    <string name="gLoginDescription">TochkaTest</string>
+    <string name="signInWith">Sign in with:</string>
+
+    <integer name="com_vk_sdk_AppId">6279318</integer>
+
+    <string name="facebook_app_id">132494417441138</string>
+    <string name="fb_login_protocol_scheme">fb132494417441138</string>
+
+</resources>
