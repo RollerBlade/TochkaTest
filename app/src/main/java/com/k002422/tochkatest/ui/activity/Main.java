@@ -58,10 +58,8 @@ public class Main extends MvpAppCompatActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMainPresenterAccounts.init(this.getBaseContext());
         toolbar = findViewById(R.id.toolbar);
         coordinatorLayout = findViewById(R.id.mainCoordinatorLayout);
-
         setSupportActionBar(toolbar);
         recyclerViewInit();
         drawerInit();
@@ -71,9 +69,12 @@ public class Main extends MvpAppCompatActivity implements MainView {
     protected void onResume() {
         super.onResume();
         if (data != null) {
-            mMainPresenterAccounts.checkLoginState(data.getStringExtra("loginState"));
+            mMainPresenterAccounts.checkLoginState(data.getStringExtra("loginState"), this);
             data = null;
         }
+        else
+            mMainPresenterAccounts.onViewResumed(this);
+
     }
 
     @Override
@@ -87,7 +88,6 @@ public class Main extends MvpAppCompatActivity implements MainView {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-
 
         Disposable searchViewDisposable = com.jakewharton.rxbinding2.support.v7.widget.RxSearchView.
                 queryTextChangeEvents(searchView).
@@ -120,8 +120,7 @@ public class Main extends MvpAppCompatActivity implements MainView {
         RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                int lastvisibleitemposition = layoutManager.findLastVisibleItemPosition();
-                if (lastvisibleitemposition == (adapter.getItemCount() - 1) &&
+                if (layoutManager.findLastVisibleItemPosition() == (adapter.getItemCount() - 1) &&
                         !adapter.footerVisible) {
                     mainPresenterGitHub.getNextPage();
                 }

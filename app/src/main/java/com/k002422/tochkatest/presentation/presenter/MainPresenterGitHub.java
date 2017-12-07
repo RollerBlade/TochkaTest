@@ -31,7 +31,7 @@ public class MainPresenterGitHub extends MvpPresenter<MainView> {
 
     public void getNextPage() {
         if (responsePaginationHandler.allows())
-            getUsersPage(responsePaginationHandler.query, responsePaginationHandler.nextpage);
+            getUsersPage(responsePaginationHandler.query, responsePaginationHandler.nextPage);
     }
 
     private void getUsersPage(String query, int page) {
@@ -64,6 +64,6 @@ public class MainPresenterGitHub extends MvpPresenter<MainView> {
     }
 
     public void retryGetPage() {
-        getUsersPage(responsePaginationHandler.query, responsePaginationHandler.nextpage);
+        getUsersPage(responsePaginationHandler.query, responsePaginationHandler.nextPage);
     }
 }

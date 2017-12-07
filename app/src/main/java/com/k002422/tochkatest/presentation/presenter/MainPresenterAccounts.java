@@ -27,17 +27,10 @@ import org.json.JSONException;
 @InjectViewState
 public class MainPresenterAccounts extends MvpPresenter<MainView> {
     private static final String TAG = "TestApp:MainPrsntrAcc";
-    private Context context; //destroyable in this.onDestroy method
 
-    public void init(Context baseContext) {
-        context = baseContext;
-    }
-
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
+    public void onViewResumed(Context context) {
         String loginMode = PrefUtils.getLoggedInMode(context);
-        checkLoginState(loginMode);
+        checkLoginState(loginMode, context);
     }
 
     @Override
@@ -45,13 +38,13 @@ public class MainPresenterAccounts extends MvpPresenter<MainView> {
         super.attachView(view);
     }
 
-    public void checkLoginState(String loginMode) {
+    public void checkLoginState(String loginMode, Context context) {
         switch (loginMode) {
             case "VK":
                 initCurrentAccountVK();
                 break;
             case "G":
-                initCurrentAccountG();
+                initCurrentAccountG(context);
                 break;
             case "FB":
                 initCurrentAccountFB();
@@ -60,7 +53,6 @@ public class MainPresenterAccounts extends MvpPresenter<MainView> {
                 getViewState().closeActivity();
                 break;
             default:
-                //not here
                 getViewState().startLoginActivity();
                 break;
         }
@@ -119,7 +111,7 @@ public class MainPresenterAccounts extends MvpPresenter<MainView> {
         }
     }
 
-    private void initCurrentAccountG() {
+    private void initCurrentAccountG(Context context) {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
         if (account == null) {
             getViewState().startLoginActivity();
@@ -134,9 +126,4 @@ public class MainPresenterAccounts extends MvpPresenter<MainView> {
         getViewState().setAccountInfo(new AccountUtils(accType, name, photoUri));
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        context = null;
-    }
 }

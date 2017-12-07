@@ -3,7 +3,6 @@ package com.k002422.tochkatest.ui.activity.MainUtils;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.k002422.tochkatest.R;
@@ -21,20 +20,20 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if ((position == getItemCount() - 1) && footerVisible)
-            return TYPE_FOOTER;
-        return TYPE_ITEM;
+        return ((position == getItemCount() - 1) && footerVisible) ? TYPE_FOOTER : TYPE_ITEM;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item_users, parent, false);
-            return new UserViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_footer_users, parent, false);
-            return new FooterViewHolder(view);
-        }
+        return (viewType == TYPE_ITEM) ?
+                new UserViewHolder
+                        (LayoutInflater.
+                                from(parent.getContext()).
+                                inflate(R.layout.view_item_users, parent, false)) :
+                new FooterViewHolder
+                        (LayoutInflater.
+                                from(parent.getContext()).
+                                inflate(R.layout.view_footer_users, parent, false));
     }
 
     @Override

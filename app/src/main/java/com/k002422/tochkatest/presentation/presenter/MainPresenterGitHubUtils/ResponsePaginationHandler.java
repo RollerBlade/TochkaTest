@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 import okhttp3.Headers;
 
 public class ResponsePaginationHandler {
-    private boolean multipage = false;
+    private boolean multiPage = false;
     private boolean lastPageFetched = true;
-    public int nextpage = 1;
+    public int nextPage = 1;
     public String query = "";
 
     public ResponsePaginationHandler(String query) {
@@ -20,21 +20,21 @@ public class ResponsePaginationHandler {
         try {
             linkHeader = headers.get("Link");
             linkHeaderParser(linkHeader);
-            multipage = true;
+            multiPage = true;
         } catch (Exception e) {
-            multipage = false;
+            multiPage = false;
         }
     }
 
     public boolean allows() {
-        return (multipage && !lastPageFetched);
+        return (multiPage && !lastPageFetched);
     }
 
     private void linkHeaderParser(String linkHeader) {
         Pattern p = Pattern.compile("<[^>]*page=(\\d+)[^>]*>; rel=\"next\"");
         Matcher match = p.matcher(linkHeader);
         if (match.find()) {
-            nextpage = Integer.parseInt(match.group(1));
+            nextPage = Integer.parseInt(match.group(1));
             lastPageFetched = false;
         } else
             lastPageFetched = true;
