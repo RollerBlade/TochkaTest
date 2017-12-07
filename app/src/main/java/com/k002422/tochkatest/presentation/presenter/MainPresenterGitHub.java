@@ -44,9 +44,7 @@ public class MainPresenterGitHub extends MvpPresenter<MainView> {
                     try {
                         if (response.code() == 403)
                             throw new HttpException(response);
-                        ArrayList<String> names = new ArrayList<>();
-                        for (Item user : response.body().items)
-                            names.add(user.login);
+                        ArrayList<Item> names = new ArrayList<>(response.body().items);
                         getViewState().toggleRecyclerProgressBar(false);
                         getViewState().showDataset(names);
                         responsePaginationHandler.pushPage(response.headers());

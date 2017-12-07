@@ -26,7 +26,6 @@ public class Login extends MvpAppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         loginCoordinatorLayout = findViewById(R.id.loginCoordinator);
         mLoginPresenter.init(this.getBaseContext());
-
     }
 
     public void login(View view) {
@@ -69,9 +68,7 @@ public class Login extends MvpAppCompatActivity implements LoginView {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("loginState", "QUIT");
-        setResult(RESULT_OK, intent);
+        closeThisView("QUIT");
         super.onBackPressed();
     }
 

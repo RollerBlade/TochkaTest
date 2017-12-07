@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -24,6 +23,7 @@ import com.k002422.tochkatest.presentation.presenter.MainPresenterGitHub;
 import com.k002422.tochkatest.presentation.view.MainView;
 import com.k002422.tochkatest.ui.activity.MainUtils.UsersAdapter;
 import com.k002422.tochkatest.utils.AccountUtils;
+import com.k002422.tochkatest.utils.GitHubUtils.ResponseEntity.Item;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -105,6 +105,12 @@ public class Main extends MvpAppCompatActivity implements MainView {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        this.data = data;
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     public void recyclerViewInit() {
         recyclerView = findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -164,7 +170,6 @@ public class Main extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void startLoginActivity() {
-        Log.d("asdasd", "Main.startLogin");
         Intent intent = new Intent(this, Login.class);
         startActivityForResult(intent, 100);
     }
@@ -178,12 +183,7 @@ public class Main extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
-    public void closeActivity() {
-        this.finish();
-    }
-
-    @Override
-    public void showDataset(ArrayList<String> userNames) {
+    public void showDataset(ArrayList<Item> userNames) {
         UsersAdapter adapter = (UsersAdapter) recyclerView.getAdapter();
         int itemsToAdd = userNames.size();
         int currentDataPoolSize = adapter.usersList.size();
@@ -212,8 +212,7 @@ public class Main extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        this.data = data;
-        super.onActivityResult(requestCode, resultCode, data);
+    public void closeActivity() {
+        this.finish();
     }
 }
