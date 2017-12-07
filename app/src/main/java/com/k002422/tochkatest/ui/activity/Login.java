@@ -25,7 +25,6 @@ public class Login extends MvpAppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginCoordinatorLayout = findViewById(R.id.loginCoordinator);
-        mLoginPresenter.init(this.getBaseContext());
     }
 
     public void login(View view) {
@@ -45,7 +44,7 @@ public class Login extends MvpAppCompatActivity implements LoginView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mLoginPresenter.loginResultAnalyzer(requestCode, resultCode, data);
+        mLoginPresenter.loginResultAnalyzer(requestCode, resultCode, data, this);
     }
 
     @Override

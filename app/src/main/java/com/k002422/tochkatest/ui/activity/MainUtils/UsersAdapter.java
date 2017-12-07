@@ -44,6 +44,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             uvHolder.tv.setText(usersList.get(position).login);
             Picasso.with(uvHolder.iv.getContext()).
                     load(Uri.parse(usersList.get(position).avatarUrl)).
+                    fit().
                     into(uvHolder.iv);
         }
     }

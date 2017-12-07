@@ -4,6 +4,7 @@ package com.k002422.tochkatest.presentation.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -31,17 +32,6 @@ import java.util.Collections;
 public class LoginPresenter extends MvpPresenter<LoginView> {
     public static final String TAG = "TestApp:LoginPresenter";
     private CallbackManager callbackManager;
-    private Context context; //destroyable in this.onDestroy method
-
-    public void init(Context baseContext) {
-        context = baseContext;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        context = null;
-    }
 
     @Override
     protected void onFirstViewAttach() {
@@ -67,7 +57,7 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        PrefUtils.setLoggedInMode(context, "FB");
+                        PrefUtils.setLoggedInMode(activity, "FB");
                         getViewState().closeThisView("FB");
                     }
 
@@ -84,13 +74,13 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
         LoginManager.getInstance().logInWithReadPermissions(activity, Collections.singletonList("public_profile"));
     }
 
-    public void loginResultAnalyzer(int requestCode, int resultCode, Intent data) {
-        if (!vkLoginCallback(requestCode, resultCode, data))
+    public void loginResultAnalyzer(int requestCode, int resultCode, Intent data, Context context) {
+        if (!vkLoginCallback(requestCode, resultCode, data, context))
             if (!fbLoginCallback(requestCode, resultCode, data))
-                googleLoginCallback(requestCode, data);
+                googleLoginCallback(requestCode, data, context);
     }
 
-    private boolean vkLoginCallback(int requestCode, int resultCode, Intent data) {
+    private boolean vkLoginCallback(int requestCode, int resultCode, Intent data, Context context) {
         return VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
@@ -114,7 +104,7 @@ public class LoginPresenter extends MvpPresenter<LoginView> {
         }
     }
 
-    private void googleLoginCallback(int requestCode, Intent data) {
+    private void googleLoginCallback(int requestCode, Intent data, Context context) {
         if (requestCode == 100) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {

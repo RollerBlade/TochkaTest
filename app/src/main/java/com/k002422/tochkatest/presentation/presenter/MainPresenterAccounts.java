@@ -28,7 +28,6 @@ import org.json.JSONException;
 public class MainPresenterAccounts extends MvpPresenter<MainView> {
     private static final String TAG = "TestApp:MainPrsntrAcc";
     private Context context; //destroyable in this.onDestroy method
-    private AccountUtils currentAccount;
 
     public void init(Context baseContext) {
         context = baseContext;
@@ -106,7 +105,7 @@ public class MainPresenterAccounts extends MvpPresenter<MainView> {
                 new ProfileTracker() {
                     @Override
                     protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                        String name = currentProfile.getFirstName() + currentProfile.getLastName();
+                        String name = currentProfile.getFirstName() + " " + currentProfile.getLastName();
                         Uri photoUrl = currentProfile.getProfilePictureUri(500, 500);
                         setupAccount("FB account", name, photoUrl);
                         this.stopTracking();
@@ -132,8 +131,7 @@ public class MainPresenterAccounts extends MvpPresenter<MainView> {
     }
 
     private void setupAccount(String accType, String name, Uri photoUri) {
-        currentAccount = new AccountUtils(accType, name, photoUri);
-        getViewState().setAccountInfo(currentAccount);
+        getViewState().setAccountInfo(new AccountUtils(accType, name, photoUri));
     }
 
     @Override
