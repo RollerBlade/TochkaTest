@@ -71,8 +71,7 @@ public class Main extends MvpAppCompatActivity implements MainView {
         if (data != null) {
             mMainPresenterAccounts.checkLoginState(data.getStringExtra("loginState"), this);
             data = null;
-        }
-        else
+        } else
             mMainPresenterAccounts.onViewResumed(this);
 
     }
@@ -114,6 +113,7 @@ public class Main extends MvpAppCompatActivity implements MainView {
     public void recyclerViewInit() {
         recyclerView = findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
         recyclerView.setLayoutManager(layoutManager);
         UsersAdapter adapter = new UsersAdapter();
         recyclerView.setAdapter(adapter);
@@ -121,9 +121,8 @@ public class Main extends MvpAppCompatActivity implements MainView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (layoutManager.findLastVisibleItemPosition() == (adapter.getItemCount() - 1) &&
-                        !adapter.footerVisible) {
+                        !adapter.footerVisible)
                     mainPresenterGitHub.getNextPage();
-                }
             }
         };
         recyclerView.addOnScrollListener(onScrollListener);
